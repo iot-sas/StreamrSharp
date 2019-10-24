@@ -88,6 +88,7 @@
     <Compile Include="StreamMessage.cs" />
     <Compile Include="Stream.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="JsonSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

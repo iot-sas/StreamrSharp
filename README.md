@@ -38,7 +38,7 @@ streamrClient.NetworkMessage += (sender, e) =>
   Thread.Sleep(5000);  
 ```
   
-#### Unsubmscribe
+#### Unsubscribe
 ```
   var unsubscribe = new UnsubscribeRequest(HelsinkiTrams);  
   streamrClient.Send(unsubscribe);  
@@ -50,29 +50,72 @@ streamrClient.NetworkMessage += (sender, e) =>
 
 #### Create a message class
 ```
-public class trackerMessage  
-{  
-   public String vehicleName;  
-   public DateTime dateTime;  
-   public gps GPS;  
-  
-   public class gps  
-   {  
-      public double lat;  
-      public double lon;  
-      public int speed;  
-      public long altitude;  
-   }  
-}  
+public partial class HelsinkiTrams
+{
+    [JsonProperty("long")]
+    public double? Long { get; set; }
+    
+    [JsonProperty("oday")]        
+    public DateTime? Oday { get; set; }
+
+    [JsonProperty("lat")]
+    public double? Lat { get; set; }
+
+    [JsonProperty("odo")]
+    public long? Odo { get; set; }
+
+    [JsonProperty("oper")]
+    public long? Oper { get; set; }
+
+    [JsonProperty("desi")]
+    public string Desi { get; set; }
+
+    [JsonProperty("veh")]
+    public long? Veh { get; set; }
+
+    [JsonProperty("tst")]
+    public DateTime? Tst { get; set; }
+
+    [JsonProperty("dir")]
+    public string Dir { get; set; }
+
+    [JsonProperty("tsi")]
+    public long? Tsi { get; set; }
+
+    [JsonProperty("hdg")]
+    public long? Hdg { get; set; }
+
+    [JsonProperty("start")]
+    public string Start { get; set; }
+
+    [JsonProperty("dl")]
+    public long? Dl { get; set; }
+
+    [JsonProperty("jrn")]
+    public long? Jrn { get; set; }
+
+    [JsonProperty("line")]
+    public long? Line { get; set; }
+
+    [JsonProperty("spd")]
+    public double? Spd { get; set; }
+
+    [JsonProperty("drst")]
+    public long? Drst { get; set; }
+
+    [JsonProperty("acc")]
+    public double? Acc { get; set; }
+}
 ```
+
 #### Subscribe to stream
 ```
-   var myStreamId = "XXXXXXXXX";  
-  
-   var Stream = new Stream<trackerMessage>(streamrClient);  
-   Stream.Subscribe(myStreamId);  
-   Stream.Message+= (sender, e) =>  
-   {  
-       Console.WriteLine($"{e.Data.GPS.lat} {e.Data.GPS.lon}");  
-   };
+var HelsinkiTrams = "7wa7APtlTq6EC5iTCBy6dw";
+
+var Stream = new Stream<trackerMessage>(streamrClient);  
+Stream.Subscribe(HelsinkiTrams);  
+Stream.Message+= (sender, e) =>
+{
+   Console.WriteLine($"{e.Data.GPS.lat} {e.Data.GPS.lon}");
+};
 ```

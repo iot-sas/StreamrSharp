@@ -114,7 +114,7 @@ namespace StreamrSharp
             pt1 = streamDataIn.IndexOf('"',pt1);
             if (pt1 == -1) return;
             pt2 = streamDataIn.LastIndexOf('}',streamDataIn.Length-1);
-            Content = streamDataIn.Substring(pt1 + 1, pt2 - pt1);
+            Content = streamDataIn.Substring(pt1 + 1, pt2 - pt1).Replace("\\\"","\"");
             
             pt1 = pt2 + 2;
             if (pt1 >= streamDataIn.Length) return;
