@@ -1,7 +1,7 @@
 # Streamr Sharp
 
  - .NET Streamr websocket client
- -  Generics support
+ -  Generics support, with Stream helper class
 
 **NOTE:  This is in development, expect breaking changes.**
 
@@ -9,8 +9,8 @@
 ```
 using (var streamrClient = new StreamrClient("https://www.streamr.com/api/v1", "wss://www.streamr.com/api/v1/ws"))  
     {  
-        var token = SessionToken.Authenticate("WrSBitdlTNW2dnlDzI4PHwVtmClbsIT2eVgYxUl0x2ew", streamrClient.RestURL);  
-        streamrClient.Connect(token);  
+        var token = SessionToken.Authenticate("WrSBitdlTNW2dxxxxxxxxxxxxxxxxxxxxxxxxxx", streamrClient.RestURL);  
+        streamrClient.Connect(token);
 ```
   
 #### Hook into data stream event  
@@ -50,62 +50,30 @@ streamrClient.NetworkMessage += (sender, e) =>
 
 #### Create a message class
 ```
-public partial class HelsinkiTrams
-{
-    [JsonProperty("long")]
-    public double? Long { get; set; }
-    
-    [JsonProperty("oday")]        
-    public DateTime? Oday { get; set; }
-
-    [JsonProperty("lat")]
-    public double? Lat { get; set; }
-
-    [JsonProperty("odo")]
-    public long? Odo { get; set; }
-
-    [JsonProperty("oper")]
-    public long? Oper { get; set; }
-
-    [JsonProperty("desi")]
-    public string Desi { get; set; }
-
-    [JsonProperty("veh")]
-    public long? Veh { get; set; }
-
-    [JsonProperty("tst")]
-    public DateTime? Tst { get; set; }
-
-    [JsonProperty("dir")]
-    public string Dir { get; set; }
-
-    [JsonProperty("tsi")]
-    public long? Tsi { get; set; }
-
-    [JsonProperty("hdg")]
-    public long? Hdg { get; set; }
-
-    [JsonProperty("start")]
-    public string Start { get; set; }
-
-    [JsonProperty("dl")]
-    public long? Dl { get; set; }
-
-    [JsonProperty("jrn")]
-    public long? Jrn { get; set; }
-
-    [JsonProperty("line")]
-    public long? Line { get; set; }
-
-    [JsonProperty("spd")]
-    public double? Spd { get; set; }
-
-    [JsonProperty("drst")]
-    public long? Drst { get; set; }
-
-    [JsonProperty("acc")]
-    public double? Acc { get; set; }
-}
+    public partial class HelsinkiTrams
+    {
+        [JsonProperty("long")]
+        public double? Longitude { get; set; }
+        public DateTime? oday { get; set; }
+        [JsonProperty("lat")]
+        public double? Latitude { get; set; }
+        public long? odo { get; set; }
+        public long? oper { get; set; }
+        public string desi { get; set; }
+        public long? veh { get; set; }
+        public DateTime? tst { get; set; }
+        public string dir { get; set; }
+        public long? tsi { get; set; }
+        public long? hdg { get; set; }
+        public string start { get; set; }
+        public long? dl { get; set; }
+        public long? jrn { get; set; }
+        public long? line { get; set; }
+        [JsonProperty("spd")]
+        public double? Speed { get; set; }        
+        public long? drst { get; set; }
+        public double? acc { get; set; }
+    }
 ```
 
 #### Subscribe to stream
@@ -116,6 +84,6 @@ var Stream = new Stream<trackerMessage>(streamrClient);
 Stream.Subscribe(HelsinkiTrams);  
 Stream.Message+= (sender, e) =>
 {
-   Console.WriteLine($"{e.Data.GPS.lat} {e.Data.GPS.lon}");
+   Console.WriteLine($"{e.Data.GPS.Latitude} {e.Data.GPS.Longitude} {e.Data.GPS.Speed}");
 };
 ```
