@@ -9,6 +9,6 @@ namespace StreamrSharp.API.ControlLayer
         uint         Version        { get; set; }
         messageType  MessageType    { get; }
 
-        string ToMessage(SessionToken sessionToken);
+        string ToMessage(SessionToken sessionToken, string requestID);
     }
 }

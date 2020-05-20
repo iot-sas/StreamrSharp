@@ -1,5 +1,5 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace StreamrSharp.API.ControlLayer
 {
@@ -18,19 +18,31 @@ namespace StreamrSharp.API.ControlLayer
         }
 
         
-        
-        public string ToMessage(SessionToken sessionToken)
+        //[31, [...msgIdFields], [...msgRefFields], 27, 0, "contentData", 1, "0x29c057786Fa..."]
+        public string ToMessage(SessionToken sessionToken, string requestID)
         {        
+                // [version, type, requestId, streamMessage, sessionToken]
             var sb = new StringBuilder();
             sb.Append("[");
             sb.Append(Version);
             sb.Append(",");
             sb.Append((uint)MessageType);
+            // sb.Append(",\"");
+            // sb.Append(requestID);
+            // sb.Append("\",");
+
+            //  sb.Append(",42,");
+              //sb.Append(",\"42\",");
+              
             sb.Append(",");
             sb.Append(streamMessage.ToJson());
+            sb.Append(",\"");
+            sb.Append(sessionToken.token);
+            sb.Append("\"]");
 
             return sb.ToString();
         }
+        
         
     }
 }

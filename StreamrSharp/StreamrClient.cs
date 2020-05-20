@@ -21,8 +21,12 @@ namespace StreamrSharp
         {
             RestURL = restURL;
             WebSocketURL = webSocketURL;
+            
+           
         }
 
+
+        string RequestID { get; set; } = "0";
 
         public WebsocketClient websocketClient { get; private set; }
 
@@ -35,6 +39,7 @@ namespace StreamrSharp
         StringBuilder sb = new StringBuilder();
         
         
+        
         public void Connect(SessionToken sessionTokenClass=null)
         {
             var sclient = new StreamrClient();
@@ -43,7 +48,7 @@ namespace StreamrSharp
 
             websocketClient = new WebsocketClient(new Uri(WebSocketURL));
 
-            websocketClient.ReconnectTimeoutMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
+            websocketClient.ReconnectTimeout = TimeSpan.FromSeconds(30);
             websocketClient.ReconnectionHappened.Subscribe(type =>
                 Console.WriteLine($"Reconnection happened, type: {type}"));
 
@@ -165,7 +170,7 @@ namespace StreamrSharp
 
         public void Send(IControlLayer messageClass,string Sender = "sender", SessionToken token = null)
         {
-            websocketClient.Send(messageClass.ToMessage(token ?? sessionToken));
+            websocketClient.Send(messageClass.ToMessage(token ?? sessionToken, RequestID));
         }
 
         public void Dispose()

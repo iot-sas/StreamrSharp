@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -8,6 +9,17 @@
     <RootNamespace>StreamrSharp</RootNamespace>
     <AssemblyName>StreamrSharp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>20089e90-ffd7-4b3a-a7ab-5f8e36dd9bcc</PackageId>
+    <PackageVersion>0.1</PackageVersion>
+    <Authors>TFA Labs</Authors>
+    <NeutralLanguage>uk</NeutralLanguage>
+    <PackageLicenseUrl>https://github.com/iot-sas/StreamrSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <Owners>TFA Labs</Owners>
+    <PackageProjectUrl>https://github.com/iot-sas/StreamrSharp</PackageProjectUrl>
+    <PackageTags>Streamr</PackageTags>
+    <Title>StreamrSharp</Title>
+    <Description>Streamr Websocket Driver</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,23 +42,23 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Reactive">
-      <HintPath>..\..\StreamerSharpTest\packages\System.Reactive.4.2.0\lib\net46\System.Reactive.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\System.Reactive.4.4.1\lib\net46\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="Websocket.Client">
-      <HintPath>..\..\StreamerSharpTest\packages\Websocket.Client.3.2.56\lib\netstandard2.0\Websocket.Client.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\Websocket.Client.4.3.12\lib\netstandard2.0\Websocket.Client.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
-      <HintPath>..\..\StreamerSharpTest\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\StreamerSharpTest\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>..\..\StreamerSharpTest\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>..\..\StreamerSharpTest\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\..\StreamerSharpTest\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple">
       <HintPath>..\..\StreamerSharpTest\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
@@ -55,6 +67,9 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
+    <Reference Include="System.Threading.Channels">
+      <HintPath>..\..\StreamerSharpTest\packages\System.Threading.Channels.4.7.0\lib\netstandard2.0\System.Threading.Channels.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +104,7 @@
     <Compile Include="Stream.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="JsonSettings.cs" />
+    <Compile Include="Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -100,4 +116,5 @@
     <Folder Include="API\NetworkLayer\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets')" />
 </Project>

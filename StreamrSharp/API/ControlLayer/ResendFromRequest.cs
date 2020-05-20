@@ -7,7 +7,7 @@ namespace StreamrSharp.API.ControlLayer
         {
         }
         
-        public string ToMessage(SessionToken sessionToken)
+        public string ToMessage(SessionToken sessionToken, string requestID)
         {
             throw new NotImplementedException();
         }

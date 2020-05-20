@@ -2,6 +2,7 @@
 using System.Net;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using StreamrSharp.API.ControlLayer;
 
@@ -17,20 +18,29 @@ namespace StreamrSharp
         public string        StreamDescription         { get; private set; }
         public T             MessageClass              { get; private set; }
         
+        public string        RequestID                 { get; private set; }
+        
+        public long          TimeStamp                 { get; private set; }
+        public uint          SequenceNo                { get; private set; }
+        public bool          Subscribed                { get; private set; }
+        
         public event EventHandler<Message<T>> Message;
 
-        public Stream(StreamrClient client)
+        public Stream(StreamrClient client, string streamID, string requestID = "myapp")
         {
             Client = client;
+            StreamID = streamID;
+            RequestID = requestID;
         }
     
 
 
-        public void Subscribe(string id)
+        public void Subscribe()
         {
-            StreamID = id;
+            if (Subscribed) return;
             var subscribe = new SubscribeRequest(StreamID);
             Client.Send(subscribe);
+            Subscribed = true;
             
             Client.BroadcastMessage += (sender, e) =>
             {
@@ -64,6 +74,26 @@ namespace StreamrSharp
 
             var response = client.Execute(request);
             return (response.StatusCode == HttpStatusCode.OK);
+        }
+
+        public void Publish(T message)
+        {
+
+            var streamMessage = new StreamMessage(StreamID, JObject.FromObject(message))
+            {
+            
+                PrevTimeStamp = this.TimeStamp,
+                PrevSequenceNo = this.SequenceNo,
+            
+                TimeStamp = DateTime.UtcNow.ToEpochMilliseconds(),
+                SequenceNo = this.SequenceNo + 1
+            };
+            
+            var packet = new PublishRequest(streamMessage);
+            Client.Send(packet);
+
+            TimeStamp = streamMessage.TimeStamp;
+            SequenceNo = streamMessage.SequenceNo;
         }
 
 

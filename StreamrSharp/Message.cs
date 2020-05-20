@@ -9,8 +9,8 @@ namespace StreamrSharp
         public T             Data          { get; private set; }
         
         public Message(StreamMessage streamMessage)
-        {        
-            Data = JsonConvert.DeserializeObject<T>(streamMessage.Content);  //,JsonSettings.SerializeSettings
+        {
+            Data = JsonConvert.DeserializeObject<T>(streamMessage.Content, JsonSettings.SerializeSettings);
             StreamMessage = streamMessage;
         }
     }

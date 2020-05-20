@@ -22,7 +22,7 @@ namespace StreamrSharp.API.ControlLayer
         }
         
           
-        public string ToMessage(SessionToken sessionToken)
+        public string ToMessage(SessionToken sessionToken, string requestID)
         {
             return  $"[{Version},{(int)MessageType},\"{StreamID}\",{StreamPartition},\"{sessionToken.token}\"]";
         }

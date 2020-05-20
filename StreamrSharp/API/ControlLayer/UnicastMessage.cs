@@ -6,7 +6,7 @@ namespace StreamrSharp.API.ControlLayer
         public UnicastMessage(ref string[] dataInput): base(messageType.UnicastMessage)
         {
         }
-        public string ToMessage(SessionToken sessionToken)
+        public string ToMessage(SessionToken sessionToken, string requestID)
         {
             throw new NotImplementedException();
         }

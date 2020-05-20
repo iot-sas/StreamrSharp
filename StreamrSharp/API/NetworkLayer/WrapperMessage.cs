@@ -14,11 +14,11 @@ namespace StreamrSharp.API.NetworkLayer
             Sender = sender;
         }
         
-        public string ToMessage(SessionToken sessionToken)
+        public string ToMessage(SessionToken sessionToken, string requestID)
         {
             //[version, type, source, controlLayerPayload]
         
-            var msg =  $"[\"{Version}\",{(int)messageType.WrapperMessage},\"{Sender}\",{ControlLayer.ToMessage(sessionToken)}]";
+            var msg =  $"[\"{Version}\",{(int)messageType.WrapperMessage},\"{Sender}\",{ControlLayer.ToMessage(sessionToken,requestID)}]";
             return msg;
         }
                 

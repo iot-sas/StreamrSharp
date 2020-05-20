@@ -9,6 +9,7 @@ namespace StreamrSharp.API.ControlLayer
     {
         public StreamMessage streamMessage            { get; set; }
 
+        static public uint requestId                         { get; private set; }
         
         public BroadcastMessage(ref String[] dataInput) : base(messageType.BroadcastMessage)
         {
@@ -16,8 +17,8 @@ namespace StreamrSharp.API.ControlLayer
         }
 
         
-        public string ToMessage(SessionToken sessionToken)
-        {       
+        public string ToMessage(SessionToken sessionToken, string requestID)
+        {  
             throw new NotImplementedException();
         }
     }
